@@ -14,16 +14,406 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      audit_log: {
+        Row: {
+          action: string
+          actor_id: string | null
+          created_at: string
+          entity_id: string | null
+          entity_label: string | null
+          entity_type: string
+          field: string | null
+          id: string
+          new_value: string | null
+          old_value: string | null
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          created_at?: string
+          entity_id?: string | null
+          entity_label?: string | null
+          entity_type: string
+          field?: string | null
+          id?: string
+          new_value?: string | null
+          old_value?: string | null
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          created_at?: string
+          entity_id?: string | null
+          entity_label?: string | null
+          entity_type?: string
+          field?: string | null
+          id?: string
+          new_value?: string | null
+          old_value?: string | null
+        }
+        Relationships: []
+      }
+      collection_product_images: {
+        Row: {
+          created_at: string
+          id: string
+          product_id: string
+          storage_path: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          product_id: string
+          storage_path: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          product_id?: string
+          storage_path?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collection_product_images_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "collection_products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      collection_products: {
+        Row: {
+          brand: string
+          created_at: string
+          created_by: string | null
+          deadline: string | null
+          designer: string | null
+          final_pilot: string | null
+          final_status: Database["public"]["Enums"]["final_status"]
+          first_pilot: string | null
+          first_sample_date: string | null
+          id: string
+          is_demo: boolean
+          licensor: string | null
+          notes: string | null
+          official_tag: string | null
+          product: string
+          reference: string | null
+          remark_1: string | null
+          remark_2: string | null
+          remark_3: string | null
+          sent_date: string | null
+          status: string | null
+          supplier: string | null
+          updated_at: string
+        }
+        Insert: {
+          brand?: string
+          created_at?: string
+          created_by?: string | null
+          deadline?: string | null
+          designer?: string | null
+          final_pilot?: string | null
+          final_status?: Database["public"]["Enums"]["final_status"]
+          first_pilot?: string | null
+          first_sample_date?: string | null
+          id?: string
+          is_demo?: boolean
+          licensor?: string | null
+          notes?: string | null
+          official_tag?: string | null
+          product?: string
+          reference?: string | null
+          remark_1?: string | null
+          remark_2?: string | null
+          remark_3?: string | null
+          sent_date?: string | null
+          status?: string | null
+          supplier?: string | null
+          updated_at?: string
+        }
+        Update: {
+          brand?: string
+          created_at?: string
+          created_by?: string | null
+          deadline?: string | null
+          designer?: string | null
+          final_pilot?: string | null
+          final_status?: Database["public"]["Enums"]["final_status"]
+          first_pilot?: string | null
+          first_sample_date?: string | null
+          id?: string
+          is_demo?: boolean
+          licensor?: string | null
+          notes?: string | null
+          official_tag?: string | null
+          product?: string
+          reference?: string | null
+          remark_1?: string | null
+          remark_2?: string | null
+          remark_3?: string | null
+          sent_date?: string | null
+          status?: string | null
+          supplier?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string | null
+          full_name: string
+          id: string
+          job_title: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          id: string
+          job_title?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          id?: string
+          job_title?: string | null
+        }
+        Relationships: []
+      }
+      task_comments: {
+        Row: {
+          author_id: string
+          body: string
+          created_at: string
+          id: string
+          task_id: string
+        }
+        Insert: {
+          author_id: string
+          body: string
+          created_at?: string
+          id?: string
+          task_id: string
+        }
+        Update: {
+          author_id?: string
+          body?: string
+          created_at?: string
+          id?: string
+          task_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "task_comments_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "task_comments_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tasks: {
+        Row: {
+          assignee_id: string | null
+          created_at: string
+          created_by: string | null
+          demo_assignee_name: string | null
+          description: string | null
+          due_date: string | null
+          id: string
+          is_demo: boolean
+          notes: string | null
+          priority: Database["public"]["Enums"]["task_priority"]
+          progress: number
+          start_date: string | null
+          status: Database["public"]["Enums"]["task_status"]
+          title: string
+          updated_at: string
+          week_start: string
+        }
+        Insert: {
+          assignee_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          demo_assignee_name?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          is_demo?: boolean
+          notes?: string | null
+          priority?: Database["public"]["Enums"]["task_priority"]
+          progress?: number
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["task_status"]
+          title: string
+          updated_at?: string
+          week_start: string
+        }
+        Update: {
+          assignee_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          demo_assignee_name?: string | null
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          is_demo?: boolean
+          notes?: string | null
+          priority?: Database["public"]["Enums"]["task_priority"]
+          progress?: number
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["task_status"]
+          title?: string
+          updated_at?: string
+          week_start?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_assignee_id_fkey"
+            columns: ["assignee_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      weekly_periods: {
+        Row: {
+          closed_at: string | null
+          closed_by: string | null
+          created_at: string
+          id: string
+          status: string
+          week_end: string
+          week_start: string
+        }
+        Insert: {
+          closed_at?: string | null
+          closed_by?: string | null
+          created_at?: string
+          id?: string
+          status?: string
+          week_end: string
+          week_start: string
+        }
+        Update: {
+          closed_at?: string | null
+          closed_by?: string | null
+          created_at?: string
+          id?: string
+          status?: string
+          week_end?: string
+          week_start?: string
+        }
+        Relationships: []
+      }
+      weekly_snapshots: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          id: string
+          metrics: Json
+          per_person: Json
+          period_id: string
+          tasks: Json
+          version: number
+          week_start: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          metrics: Json
+          per_person: Json
+          period_id: string
+          tasks: Json
+          version?: number
+          week_start: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          metrics?: Json
+          per_person?: Json
+          period_id?: string
+          tasks?: Json
+          version?: number
+          week_start?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "weekly_snapshots_period_id_fkey"
+            columns: ["period_id"]
+            isOneToOne: false
+            referencedRelation: "weekly_periods"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      close_week: { Args: { _week_start: string }; Returns: string }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      reopen_week: {
+        Args: { _reason: string; _week_start: string }
+        Returns: undefined
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "colaborador"
+      final_status: "pendente" | "aprovado" | "reprovado" | "ajustes"
+      task_priority: "baixa" | "media" | "alta" | "urgente"
+      task_status:
+        | "nao_iniciado"
+        | "em_andamento"
+        | "aguardando"
+        | "bloqueado"
+        | "concluido"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +540,17 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "colaborador"],
+      final_status: ["pendente", "aprovado", "reprovado", "ajustes"],
+      task_priority: ["baixa", "media", "alta", "urgente"],
+      task_status: [
+        "nao_iniciado",
+        "em_andamento",
+        "aguardando",
+        "bloqueado",
+        "concluido",
+      ],
+    },
   },
 } as const
